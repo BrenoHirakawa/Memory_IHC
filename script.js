@@ -38,27 +38,41 @@ function render(baralho){
 
 }
 
-let cartaSelecionada = {id: null, txt: null};
+let cartaSelecionada = {id: null, div: null};
+let acertos = []
 
 
 function handleClick(carta, cartaDiv){
   console.log(cartaDiv);
-  if(cartaSelecionada.id === null && cartaSelecionada.txt === null){
+  console.log(acertos);
+
+  if(cartaDiv.classList.contains('match')){
+    return;
+  }
+
+  if(cartaSelecionada.id === null && cartaSelecionada.div === null){
     cartaSelecionada.id = carta.pairId;
-    cartaSelecionada.txt = cartaDiv;
+    cartaSelecionada.div = cartaDiv;
+    cartaDiv.classList.add('selecionada'); 
     console.log(carta.pairId);
-  } else {
-    if(cartaSelecionada.id === carta.pairId && cartaSelecionada.txt !== cartaDiv){
+  }else{
+    if(cartaSelecionada.id === carta.pairId && cartaSelecionada.div !== cartaDiv){
       console.log(carta.pairId);
       console.log("ACHOU");
-    }else if(cartaSelecionada.txt === cartaDiv){
+      cartaSelecionada.div.classList.add('match');
+      cartaDiv.classList.add('match');
+      acertos.push(cartaSelecionada.id);
+    }else if(cartaSelecionada.div === cartaDiv){
       console.log("mesma carta");
+      return;
     }else{
       console.log(carta.pairId);
       console.log("Não é par");
+      cartaSelecionada.div.classList.replace('selecionada', 'card');
+      cartaDiv.classList.replace('selecionada', 'card'); 
     };
     cartaSelecionada.id = null;
-    cartaSelecionada.txt = null;
+    cartaSelecionada.div = null;
   }
 }
 
