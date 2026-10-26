@@ -21,16 +21,33 @@ function criaBaralho(pares){
 
 var baralho = criaBaralho(pares); //Junta as cartas pelo id delas. Ou seja, podemos saber que duas cartas são pares de acordo com o ID delas; 
 
-function render(baralho){
+function render(baralho){ //Renderiza as cartas no "tabuleiro". 
+
+  baralho = embaralhar(baralho)
+
   var container = document.getElementById('board')
   baralho.forEach(function(carta){
 
     const cartaDiv = document.createElement('div');
-    cartaDiv.textContent = carta.text;
-    cartaDiv.classList.add('card');
+    cartaDiv.classList.add('card');   
+    
+    const interiorCarta = document.createElement('div');
+    interiorCarta.classList.add('interior-carta');
+
+    const frenteCarta = document.createElement('div');
+    frenteCarta.classList.add('frente-carta');
+    frenteCarta.textContent = '?';
+
+    const versoCarta = document.createElement('div');
+    versoCarta.classList.add('verso-carta');
+    versoCarta.textContent = carta.text;
+
+    interiorCarta.appendChild(frenteCarta);
+    interiorCarta.appendChild(versoCarta);
+    cartaDiv.appendChild(interiorCarta);
 
     cartaDiv.addEventListener("click", function(){
-      handleClick(carta, cartaDiv);
+      handleClick(carta, cartaDiv, interiorCarta);
     });
 
     container.appendChild(cartaDiv);
@@ -38,13 +55,56 @@ function render(baralho){
 
 }
 
+var mov = 0;
+var paresEncontrados = 0;
 let cartaSelecionada = {id: null, div: null};
-let acertos = []
+let acertos = [];
 
+function movimento(add){
+  var movs = document.getElementById('movimentos')
+  mov += add;
+  movs.textContent = mov;
+}
 
-function handleClick(carta, cartaDiv){
-  console.log(cartaDiv);
-  console.log(acertos);
+function pares_counter(add){
+  var paresCount = document.getElementById('pares_encontrados')
+  paresEncontrados += add;
+  paresCount.textContent = paresEncontrados;
+}
+
+function reiniciar(){
+  mov = 0
+  paresEncontrados = 0
+  acertos = []; 
+  
+  var movs = document.getElementById('movimentos')
+  var paresCount = document.getElementById('pares_encontrados')
+
+  var container = document.getElementById('board');
+  container.innerHTML = '';
+
+  movs.textContent = mov
+  paresCount.textContent = paresEncontrados;
+
+  render(baralho)
+}
+
+function embaralhar(deck){
+  console.log(deck)
+  let temp = 0;
+  let j = 0;
+  for(let i = deck.length - 1; i > 0; i--){
+    j = Math.floor(Math.random() * (i + 1));
+    temp = deck[i]
+    deck[i] = deck[j]
+    deck[j] = temp
+    temp = 0
+  }
+  console.log(deck)
+  return deck;
+}
+
+function handleClick(carta, cartaDiv, interiorCarta){
 
   if(cartaDiv.classList.contains('match')){
     return;
@@ -54,61 +114,36 @@ function handleClick(carta, cartaDiv){
     cartaSelecionada.id = carta.pairId;
     cartaSelecionada.div = cartaDiv;
     cartaDiv.classList.add('selecionada'); 
-    console.log(carta.pairId);
+    interiorCarta.classList.add('flipped');
   }else{
     if(cartaSelecionada.id === carta.pairId && cartaSelecionada.div !== cartaDiv){
-      console.log(carta.pairId);
-      console.log("ACHOU");
       cartaSelecionada.div.classList.add('match');
       cartaDiv.classList.add('match');
       acertos.push(cartaSelecionada.id);
+      movimento(1);
+      pares_counter(1);
     }else if(cartaSelecionada.div === cartaDiv){
       console.log("mesma carta");
       return;
     }else{
-      console.log(carta.pairId);
-      console.log("Não é par");
       cartaSelecionada.div.classList.replace('selecionada', 'card');
       cartaDiv.classList.replace('selecionada', 'card'); 
+      
+      interiorCarta.classList.add('flipped');
+
+
+
+      movimento(1);
     };
     cartaSelecionada.id = null;
     cartaSelecionada.div = null;
   }
+
+  if(paresEncontrados === pares.length){
+    alert("Venceu o jogo!");
+    reiniciar();
+  }
+
 }
 
 render(baralho)
-
-
-
-
-// function render(deck) {
-//   const board = document.getElementById('board'); // pega a div do HTML
-
-//   board.innerHTML = ''; // limpa o board, caso já tenha algo renderizado antes
-
-//   deck.forEach(function(card) {
-//     const cardDiv = document.createElement('div'); // cria uma nova div na memória
-//     cardDiv.textContent = card.text;                // coloca o texto da carta dentro dela
-//     cardDiv.classList.add('card');                  // adiciona uma classe, útil depois pro CSS
-
-//     board.appendChild(cardDiv); // insere essa div dentro da #board no HTML
-//   });
-// }
-
-// function embaralha() {
-//   let currentIndex = pares,length,
-//       randomIndex,
-//       temporaryValue;
-//   while (currentIndex !== 0){
-//     randomIndex = Math.floor(Math.random() * currentIndex);
-//     currentIndex -= 1;
-//     temporaryValue = pares[currentIndex];
-//     card
-//   }
-// }
-
-// render(pares);
-
-// console.log(pares)
-
-
