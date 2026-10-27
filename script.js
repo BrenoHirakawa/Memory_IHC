@@ -57,8 +57,8 @@ function render(baralho){ //Renderiza as cartas no "tabuleiro".
 
 var mov = 0;
 var paresEncontrados = 0;
-let cartaSelecionada = {id: null, div: null};
 let acertos = [];
+let travado = false; 
 
 function movimento(add){
   var movs = document.getElementById('movimentos')
@@ -104,8 +104,14 @@ function embaralhar(deck){
   return deck;
 }
 
+let cartaSelecionada = {id: null, div: null};
+let interiorCartaTemp = {}
+
 function handleClick(carta, cartaDiv, interiorCarta){
 
+  if(travado) return;
+
+  console.log(interiorCarta)
   if(cartaDiv.classList.contains('match')){
     return;
   }
@@ -113,12 +119,12 @@ function handleClick(carta, cartaDiv, interiorCarta){
   if(cartaSelecionada.id === null && cartaSelecionada.div === null){
     cartaSelecionada.id = carta.pairId;
     cartaSelecionada.div = cartaDiv;
-    cartaDiv.classList.add('selecionada'); 
+    interiorCartaTemp = interiorCarta;
     interiorCarta.classList.add('flipped');
+    // cartaDiv.classList.add('selecionada'); 
   }else{
     if(cartaSelecionada.id === carta.pairId && cartaSelecionada.div !== cartaDiv){
-      cartaSelecionada.div.classList.add('match');
-      cartaDiv.classList.add('match');
+      interiorCarta.classList.add('flipped');
       acertos.push(cartaSelecionada.id);
       movimento(1);
       pares_counter(1);
@@ -126,12 +132,14 @@ function handleClick(carta, cartaDiv, interiorCarta){
       console.log("mesma carta");
       return;
     }else{
-      cartaSelecionada.div.classList.replace('selecionada', 'card');
-      cartaDiv.classList.replace('selecionada', 'card'); 
-      
-      interiorCarta.classList.add('flipped');
+      travado = true; //garante que nenhuma carta possa ser virada enquanto duas ainda não foram desviradas. 
 
-
+      interiorCarta.classList.add('flipped')
+      setTimeout(function(){
+        interiorCartaTemp.classList.replace('flipped', 'interior-carta');
+        interiorCarta.classList.replace('flipped', 'interior-carta');
+        travado = false;
+      }, 1000);      
 
       movimento(1);
     };

@@ -14,10 +14,10 @@ header{
 }
 
 .card{
-    height: calc(140px / 2 * 3);
-    width: 140px;
+    height: calc(130px / 2 * 3);
+    width: 130px;
     border-radius: 10px;
-    background-color: white;
+    background-color: transparent;
     position: relative;
     transform-style: preserve-3d;
     transition: all 0.5s ease-in-out;
@@ -28,12 +28,12 @@ header{
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d; /* permite que os filhos mantenham posição 3D */
-  transition: transform 0.5s;
+  transform-style: preserve-3d; 
+  transition: transform 0.25s;
 }
 
 .interior-carta.flipped {
-  transform: rotateY(180deg); /* gira a carta inteira */
+  transform: rotateY(180deg); 
 }
 
 .frente-carta,
@@ -43,11 +43,18 @@ header{
   left: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; /* esconde a face quando ela está "de costas" */
+  backface-visibility: hidden; 
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.6rem;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .frente-carta {
@@ -58,7 +65,7 @@ header{
 
 .verso-carta {
   background: white;
-  transform: rotateY(180deg); /* já nasce de costas, pra só aparecer depois do flip */
+  transform: rotateY(180deg); 
 }
 
 .selecionada{
