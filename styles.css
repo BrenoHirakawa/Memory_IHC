@@ -91,4 +91,13 @@ header{
 
 .screen.active {
   display: block;
+  height: auto;
+  width: auto;
+}
+
+.titulo {
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: 50px auto;
 }
