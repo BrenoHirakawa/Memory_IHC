@@ -97,7 +97,42 @@ header{
 
 .titulo {
     display: block;
+    text-align: center;
+    padding: 20px;
     width: 50%;
-    height: auto;
-    margin: 50px auto;
+    margin: 80px auto 40px;
+    box-sizing: border-box;
+}
+
+.menu-botoes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 600px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #3B3E48;
+}
+
+#btn-jogar{
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 50px;
+  color: white;
+  border-radius: 8px;
+  text-shadow: #3B3E48;
+  width: 306px;
+  height: 142px;
+  background-color: #C73F1E;
+}
+
+#btn-opcoes{
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 50px;
+  color: white;
+  border-radius: 8px;
+  text-shadow: #3B3E48;
+  width: 306px;
+  height: 142px;
+  background-color: #447FA3;
 }
