@@ -10,19 +10,28 @@
     <link rel="stylesheet" href="styles.css"> </link>
 </head>
 <body>
-    <header>
-        <div id="placar">
-            Movimentos: <span id="movimentos">0</span> |
-            Pares: <span id="pares_encontrados">0</span> / 8
+    <section class="screen active" id="tela-menu">
+        <img src="assets/logo & title.svg" alt="">
+        <div class="menu-botoes">
+            <button id="btn-jogar"></button>
+            <button id="btn-placar"></button>
+            <button id="btn-opcoes"></button>
         </div>
-    </header>
+    </section>
 
+    <section class="screen" id="tela-jogo">
+        <header>
+            <div id="placar">
+                Movimentos: <span id="movimentos">0</span> |
+                Pares: <span id="pares_encontrados">0</span> / 8
+            </div>
+        </header>
         <div class="grid-container">
 
             <div id="board"></div>
 
         </div>
-    
+    </section>
         
     <script src="script.js"></script>
 </body>

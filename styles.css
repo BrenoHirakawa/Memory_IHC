@@ -84,3 +84,11 @@ header{
   margin: 0 auto;
   padding: 20px;
 }
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
