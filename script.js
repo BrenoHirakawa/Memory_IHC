@@ -155,3 +155,14 @@ function handleClick(carta, cartaDiv, interiorCarta){
 }
 
 render(baralho)
+
+function showTela(id){
+  document.querySelectorAll('.screen').forEach(function(tela){
+    tela.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+
+document.getElementById('btn-jogar').addEventListener('click', function(){
+  showTela('tela-jogo');
+});
