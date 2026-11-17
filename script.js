@@ -128,6 +128,8 @@ function handleClick(carta, cartaDiv, interiorCarta){
       acertos.push(cartaSelecionada.id);
       movimento(1);
       pares_counter(1);
+      cartaSelecionada.div.classList.add('match');
+      cartaDiv.classList.add('match');
     }else if(cartaSelecionada.div === cartaDiv){
       console.log("mesma carta");
       return;
