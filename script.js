@@ -72,10 +72,35 @@ function pares_counter(add){
   paresCount.textContent = paresEncontrados;
 }
 
+let segundos = 0;
+let intervalo = null; 
+
+function iniciaTimer(){
+  if(intervalo !== null) return;
+  intervalo = setInterval(function(){
+    segundos += 1;
+    var tempo = document.getElementById('tempo');
+    tempo.textContent = formataTempo(segundos);
+  }, 1000);
+  return;
+}
+
+function formataTempo(total){
+  const min = Math.floor(total/60);
+  const seg = total % 60
+  return String(min).padStart(2, '0') + ':' + String(seg).padStart(2, '0'); 
+}
+
+function pararTimer(){
+  clearInterval(intervalo);
+  intervalo = null; 
+}
+
 function reiniciar(){
   mov = 0
   paresEncontrados = 0
   acertos = []; 
+  segundos = 0;
   
   var movs = document.getElementById('movimentos')
   var paresCount = document.getElementById('pares_encontrados')
@@ -83,8 +108,12 @@ function reiniciar(){
   var container = document.getElementById('board');
   container.innerHTML = '';
 
-  movs.textContent = mov
+  var segs = document.getElementById('tempo')
+
+
+  movs.textContent = mov;
   paresCount.textContent = paresEncontrados;
+  segs.textContent = formataTempo(segundos);
 
   render(baralho)
 }
@@ -115,6 +144,8 @@ function handleClick(carta, cartaDiv, interiorCarta){
   if(cartaDiv.classList.contains('match')){
     return;
   }
+
+  iniciaTimer();
 
   if(cartaSelecionada.id === null && cartaSelecionada.div === null){
     cartaSelecionada.id = carta.pairId;
@@ -149,7 +180,8 @@ function handleClick(carta, cartaDiv, interiorCarta){
     cartaSelecionada.div = null;
   }
 
-  if(paresEncontrados === pares.length){
+  if(paresEncontrados === pares.length){ //Fim de jogo
+    pararTimer();
     alert("Venceu o jogo!");
     reiniciar();
   }
@@ -168,3 +200,4 @@ function showTela(id){
 document.getElementById('btn-jogar').addEventListener('click', function(){
   showTela('tela-jogo');
 });
+
